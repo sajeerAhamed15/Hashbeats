@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:background="@color/lightWhite">
+
+
+    <ImageButton
+        android:tint="@color/icons"
+        android:padding="7dp"
+        android:id="@+id/ib_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_close"
+        android:layout_gravity="right"
+        android:background="@null"/>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_gravity="center"
+        android:src="@drawable/prescription1"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:gravity="center"
+        android:textColor="@color/icons"
+        android:layout_marginLeft="7dp"
+        android:textSize="18dp"
+        android:layout_marginTop="10dp"
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Full Blood Count" />
+
+    <TextView
+        android:textColor="@color/icons"
+        android:gravity="center"
+        android:layout_marginLeft="7dp"
+        android:textSize="15dp"
+        android:id="@+id/desc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="MediLab Colombo" />
+
+    <TextView
+        android:textColor="@android:color/white"
+        android:gravity="center"
+        android:layout_marginLeft="7dp"
+        android:id="@+id/date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="2 months and 23 days" />
+
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="20dp" />
+</LinearLayout>

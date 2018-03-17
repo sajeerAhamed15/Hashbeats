@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:paddingBottom="7dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.uom.hashbeats.LoginActivity">
+
+    <TextView
+        android:padding="12dp"
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Fingerprint Authentication"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:layout_below="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:id="@+id/textview"/>
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:srcCompat="@drawable/finger"
+        android:id="@+id/imageView"
+        android:layout_below="@+id/textview"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp" />
+
+    <TextView
+        android:padding="12dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView2"
+        android:text="Place your fingertip on the Home button to verify your identity"
+        android:layout_below="@+id/imageView"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="27dp" />
+
+    <android.support.v7.widget.AppCompatButton
+        android:theme="@style/AppTheme.Button1"
+        android:layout_marginRight="3dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/signOut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sign Out" />
+
+    <android.support.v7.widget.AppCompatButton
+        android:layout_toLeftOf="@+id/signOut"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/passAuth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Password Auth" />
+</RelativeLayout>

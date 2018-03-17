@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rel"
+    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:padding="10dp"
+    android:layout_height="match_parent"
+    tools:context="com.uom.hashbeats.HomePage">
+
+    <ListView
+        android:layout_alignParentTop="true"
+        android:scrollbars="none"
+        android:id="@+id/pending_listView"
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="10dp"/>
+
+    <ImageView
+        android:id="@+id/line"
+        android:layout_below="@+id/pending_listView"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/colorPrimaryDark"
+        android:layout_width="match_parent"
+        android:layout_height="2dp" />
+
+    <ListView
+        android:layout_below="@+id/line"
+        android:scrollbars="none"
+        android:id="@+id/timeline_listView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@null"
+        android:dividerHeight="0dp"/>
+
+</RelativeLayout>
