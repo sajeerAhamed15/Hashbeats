@@ -12,6 +12,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -30,18 +31,34 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.qap.ctimelineview.TimelineRow;
 import org.qap.ctimelineview.TimelineViewAdapter;
 
+
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import okhttp3.OkHttpClient;
+
 public class HomePage extends AppCompatActivity {
 
     private PopupWindow mPopupWindow;
+    private ArrayAdapter<TimelineRow> myAdapter;
+    private ListView myListView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,8 +70,8 @@ public class HomePage extends AppCompatActivity {
         populate(timelineRowsList);
 
 
-        ArrayAdapter<TimelineRow> myAdapter = new TimelineViewAdapter(this, 0, timelineRowsList,true);
-        ListView myListView = (ListView) findViewById(R.id.timeline_listView);
+        myAdapter = new TimelineViewAdapter(this, 0, timelineRowsList,true);
+        myListView = (ListView) findViewById(R.id.timeline_listView);
         myListView.setAdapter(myAdapter);
 
         final RelativeLayout rel=(RelativeLayout)findViewById(R.id.rel);
@@ -147,10 +164,74 @@ public class HomePage extends AppCompatActivity {
     }
 
 
-    private void populate(ArrayList<TimelineRow> timelineRowsList) {
 
+    private void populate(final ArrayList<TimelineRow> timelineRowsList) {
+
+        String url = "http://173.193.103.72:31090/api/Profile/8357";
+
+
+
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            Log.e("cametop","over");
+                            if(!response.isNull("prescriptions")){
+                                Log.e("came",response.getString("prescriptions"));
+                                JSONArray prescriptions=response.getJSONArray("prescriptions");
+                                for (int i = 0; i < prescriptions.length(); i++) {
+                                    JSONObject presc = prescriptions.getJSONObject(i);
+                                    Log.e("cameinner","null"+presc.getString("data"));
+
+                                    MedicalRecord medical_record_1 = new MedicalRecord("Prescription", "Dr. M.I.Inzimam"+"\n\n"+presc.getString("data"), 0, 37, "2011-1-27", R.drawable.no_image_512);
+                                    addNode(timelineRowsList,medical_record_1);
+                                    Log.e("addedtochain","over");
+
+                                }
+                            }
+                            if(!response.isNull("doctorNotes")){
+                                JSONArray prescriptions=response.getJSONArray("doctorNotes");
+                                for (int i = 0; i < prescriptions.length(); i++) {
+                                    JSONObject presc = prescriptions.getJSONObject(i);
+                                    MedicalRecord medical_record_1 = new MedicalRecord("Doctor Notes", presc.getString("name")+"\n\n"+presc.getString("data"), 1, 37, "2011-1-27", R.drawable.no_image_512);
+                                    addNode(timelineRowsList,medical_record_1);
+                                }
+                            }
+                            if(!response.isNull("reports")){
+                                JSONArray prescriptions=response.getJSONArray("reports");
+                                for (int i = 0; i < prescriptions.length(); i++) {
+                                    JSONObject presc = prescriptions.getJSONObject(i);
+                                    MedicalRecord medical_record_1 = new MedicalRecord("Report", presc.getString("name")+"\n\n"+presc.getString("data"), 1, 37, "2011-1-27", R.drawable.no_image_512);
+                                    addNode(timelineRowsList,medical_record_1);
+                                }
+                            }
+
+                            Log.e("trycompleted","over");
+
+                        } catch (JSONException e) {
+                            Log.e("tryfailed","over");
+                            e.printStackTrace();
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO: Handle error
+
+                    }
+                });
+
+        requestQueue.add(jsonObjectRequest);
         MedicalRecord medical_record_1 = new MedicalRecord("Schizophrenia", "Dr. Varuni De Silva", 1, 37, "2011-1-27", R.drawable.prescription1);
-        MedicalRecord medical_record_2 = new MedicalRecord("Depression", "Dr. Rohan Gunawardana", 1, 2400, "2011-5-27", R.drawable.finger);
+        /*MedicalRecord medical_record_2 = new MedicalRecord("Depression", "Dr. Rohan Gunawardana", 1, 2400, "2011-5-27", R.drawable.finger);
         MedicalRecord medical_record_3 = new MedicalRecord("Asthma", "Dr. C Amarasena", 1, 752, "2012-5-27", R.drawable.prescription1);
         MedicalRecord medical_record_4 = new MedicalRecord("Hepatitis", "Dr. Godvin Constantine", 1, 122, "2012-1-27", R.drawable.prescription1);
         MedicalRecord medical_record_5 = new MedicalRecord("Lipid Profile", "Medica Labs", 2, 1204, "2013-1-27", R.drawable.prescription1);
@@ -163,9 +244,9 @@ public class HomePage extends AppCompatActivity {
         MedicalRecord medical_record_12 = new MedicalRecord("Narcolepsy", "Dr. Gamini Ranasinghe", 0, 258, "2011-5-12", R.drawable.prescription1);
 
 
-        addNode(timelineRowsList,medical_record_1);
-        addNode(timelineRowsList,medical_record_2);
-        addNode(timelineRowsList,medical_record_3);
+
+        */addNode(timelineRowsList,medical_record_1);
+       /* addNode(timelineRowsList,medical_record_3);
         addNode(timelineRowsList,medical_record_4);
         addNode(timelineRowsList,medical_record_5);
         addNode(timelineRowsList,medical_record_6);
@@ -175,7 +256,7 @@ public class HomePage extends AppCompatActivity {
         addNode(timelineRowsList,medical_record_10);
         addNode(timelineRowsList,medical_record_11);
         addNode(timelineRowsList,medical_record_12);
-
+*/
     }
 
     @Override
@@ -260,7 +341,11 @@ public class HomePage extends AppCompatActivity {
         myRow.setTitleColor(Color.argb(255, 0, 0, 0));
         myRow.setDescriptionColor(Color.argb(255, 0, 0, 0));
 
+        Log.e("addedinnode","null"+temp.getDescr());
         timelineRowsList.add(myRow);
+        //myAdapter.notifyDataSetChanged();
+
+
     }
     private Date getDate(int i) {
         String dateInString = "2011-1-1";
